@@ -1,19 +1,22 @@
 //API 91d4c7a847e36aaa33ef6d7c116eef96
 
-const iconElement = document.querySelector('.weather.icon')  
-const tempElement = document.querySelector('.temperature.value p')
+
+//Elements
+
+const iconElement = document.querySelector('.weather-icon')  
+const tempElement = document.querySelector('.temperature-value p')
 const descElement = document.querySelector('.temperature-description')
 const locationElement = document.querySelector('.location p')
 const notificationElement = document.querySelector('.notification')
 
 //App Data
 const weather ={};
-weather.temperature = {
-    unit: 'celsius'
+weather.temperature = { 
+    unit: 'celsius' 
 };
 
-// Const and Variables
-const Kelvin = 273;
+// Const and Variables 
+const KELVIN = 273;
 const key = '91d4c7a847e36aaa33ef6d7c116eef96';
 
 //Check if the browser support GEO
@@ -41,17 +44,20 @@ function showError(error){
 //Get weather from API
 function getWeather(latitude,longitude){
     let api = `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${key}`
-fetch(api)
+    fetch(api)
     .then(function(response){
         let data = response.json();
         return data;
     })
     .then(function(data){
-        weather.temperature.value = Math.floor(data.main.temp = Kelvin)
+        weather.temperature.value = Math.floor(data.main.temp - KELVIN)
         weather.description = data.weather[0].description;
         weather.iconId = data.weather[0].icon;
         weather.city = data.name;
         weather.country = data.sys.country;
+        console.log(data);
+        console.log(weather.iconId);
+
     })
     .then(function(){
         displayWeather();
@@ -60,8 +66,8 @@ fetch(api)
 
 //Display Weather to UI
 function displayWeather(){
-    iconElement.innerHTML = `<img src="icons/${weather.iconId}.png`
-    tempElement.innerHTML = `${weather.temperature.value} ° <span>C</span>`;
+    iconElement.innerHTML = `<img src="icons/${weather.iconId}.png"/>`
+    tempElement.innerHTML = `${weather.temperature.value}° <span>C</span>`;
     descElement.innerHTML = weather.description;
     locationElement.innerHTML = `${weather.city}, ${weather.country}`;
 }

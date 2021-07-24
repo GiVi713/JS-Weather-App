@@ -58,8 +58,6 @@ body{
 }
 
 .weather-icon img{
-    width: 100px;
-    height: 100px;
     display: block;
     margin: 0 auto;
 }
@@ -83,7 +81,7 @@ body{
     font-size: .5em;
 }
 
-.temperature-description p{
+.temperature-description {
     padding: 8px;
     margin: 0;
     color: #293251;
